@@ -16,7 +16,7 @@ import java.util.List;
 public class KingJaFlowLayout extends ViewGroup {
 
     private static final String TAG = "CustomFlowLayout";
-    private int DEFAULT_SPACING=App.dip2px(10);
+    private int DEFAULT_SPACING = App.dip2px(10);
     private int mHorizontalSpacing = DEFAULT_SPACING;
     private int mVerticalSpacing = DEFAULT_SPACING;
     private Line mLine;
@@ -25,21 +25,21 @@ public class KingJaFlowLayout extends ViewGroup {
     private LayoutParams childLayoutParams;
 
     public KingJaFlowLayout(Context context) {
-        this(context,null);
+        this(context, null);
     }
 
     public KingJaFlowLayout(Context context, AttributeSet attrs) {
-        this(context, attrs,0);
+        this(context, attrs, 0);
     }
 
     public KingJaFlowLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        TypedArray typedArray = context.obtainStyledAttributes(attrs,R.styleable.AttrKingJaFlowLayout);
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.AttrKingJaFlowLayout);
         float horizontalSpacing = typedArray.getDimension(R.styleable.AttrKingJaFlowLayout_horizontalSpacing, DEFAULT_SPACING);
         float verticalSpacing = typedArray.getDimension(R.styleable.AttrKingJaFlowLayout_verticalSpacing, DEFAULT_SPACING);
         typedArray.recycle();
-        mHorizontalSpacing= (int) horizontalSpacing;
-        mVerticalSpacing= (int) verticalSpacing;
+        mHorizontalSpacing = (int) horizontalSpacing;
+        mVerticalSpacing = (int) verticalSpacing;
         setBackgroundColor(0xFFEEEEEE);
     }
 
@@ -53,6 +53,7 @@ public class KingJaFlowLayout extends ViewGroup {
 
         int childrenWidth = widthSize - getPaddingLeft() - getPaddingRight();
         int childrenHeight = heightSize - getPaddingTop() - getPaddingBottom();
+        Log.i(TAG, "childrenWidth" + childrenWidth+"widthSize" + widthSize+"getPaddingLeft" + getPaddingLeft()+"getPaddingRight" + getPaddingRight());
         reset();
         for (int i = 0; i < getChildCount(); i++) {
             View child = getChildAt(i);
@@ -68,23 +69,25 @@ public class KingJaFlowLayout extends ViewGroup {
             }
             mCurrentWidth += child.getMeasuredWidth();
             //不超过一行
-            Log.i(TAG, "mCurrentWidth"+mCurrentWidth);
+
             if (mCurrentWidth <= childrenWidth) {
+                Log.i(TAG, "if mCurrentWidth" + mCurrentWidth);
                 mLine.addView(child);
-                mCurrentWidth += mHorizontalSpacing+getPaddingRight();
+                mCurrentWidth += mHorizontalSpacing;
                 //加上间距后超过一行
                 if (mCurrentWidth >= childrenWidth) {
-                   newLine();
+                    newLine();
                 }
                 //超过一行
             } else {
+                Log.i(TAG, "else mCurrentWidth" + mCurrentWidth);
                 if (mLine.size() == 0) {
                     mLine.addView(child);
-                   newLine();
+                    newLine();
                 } else {
-                  newLine();
+                    newLine();
                     mLine.addView(child);
-                    mCurrentWidth += child.getMeasuredWidth()+mHorizontalSpacing+getPaddingRight();
+                    mCurrentWidth += child.getMeasuredWidth() + mHorizontalSpacing;
                 }
 
             }
@@ -94,39 +97,38 @@ public class KingJaFlowLayout extends ViewGroup {
         if (mLine != null && mLine.size() > 0) {
             mLines.add(mLine);
         }
-        int totelHeight=0;
-        if (heightMode==MeasureSpec.EXACTLY){
-            totelHeight=heightSize;
-        }else if (heightMode==MeasureSpec.AT_MOST){
+        int totelHeight = 0;
+        if (heightMode == MeasureSpec.EXACTLY) {
+            totelHeight = heightSize;
+        } else if (heightMode == MeasureSpec.AT_MOST) {
             for (int i = 0; i < mLines.size(); i++) {
                 int lineHeight = mLines.get(i).getLineHeight();
-                totelHeight+=lineHeight;
-                if(i!=0){
-                    totelHeight+=mVerticalSpacing;
+                totelHeight += lineHeight;
+                if (i != 0) {
+                    totelHeight += mVerticalSpacing;
                 }
             }
-            totelHeight=Math.min(childrenHeight,totelHeight);
+            totelHeight = Math.min(childrenHeight, totelHeight);
         }
-//        Log.i(TAG, "widthSize"+widthSize+"heightSize"+(totelHeight+getPaddingTop()+getPaddingBottom()));
-        setMeasuredDimension(widthSize+getPaddingLeft()+getPaddingRight(),totelHeight+getPaddingTop()+getPaddingBottom());
-    }
 
+        setMeasuredDimension(widthSize, totelHeight + getPaddingTop() + getPaddingBottom());
+    }
 
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        if (changed){
+//        if (changed) {
 //        Log.i(TAG, "mLines.size()"+mLines.size());
-            for (int i = 0; i <mLines.size() ; i++) {
-                if (i==0){
-                    l=getPaddingLeft();
-                    t=getPaddingTop();
+            for (int i = 0; i < mLines.size(); i++) {
+                if (i == 0) {
+                    l = getPaddingLeft();
+                    t = getPaddingTop();
                 }
                 Line line = mLines.get(i);
-                line.laytou(l,t,r,b);
-                t+=line.getLineHeight()+mVerticalSpacing;
+                line.laytou(l, t, r, b);
+                t += line.getLineHeight() + mVerticalSpacing;
             }
-        }
+//        }
 
     }
 
@@ -135,12 +137,13 @@ public class KingJaFlowLayout extends ViewGroup {
             mLines.add(mLine);
         }
         mLine = new Line();
-        mCurrentWidth=0;
+        mCurrentWidth = 0;
     }
-    private void reset(){
-        mLine=new Line();
+
+    private void reset() {
+        mLine = new Line();
         mLines.clear();
-        mCurrentWidth=0;
+        mCurrentWidth = 0;
     }
 
     class Line {
@@ -149,26 +152,27 @@ public class KingJaFlowLayout extends ViewGroup {
 
         public void addView(View view) {
             line.add(view);
-            mMaxHeight=Math.max(mMaxHeight,view.getMeasuredHeight());
+            mMaxHeight = Math.max(mMaxHeight, view.getMeasuredHeight());
         }
 
         public int size() {
             return line.size();
         }
 
-        public int getLineHeight(){
+        public int getLineHeight() {
             return mMaxHeight;
         }
-        public void laytou(int l, int t, int r, int b){
+
+        public void laytou(int l, int t, int r, int b) {
             for (int i = 0; i < line.size(); i++) {
                 View view = line.get(i);
-                int top= t+(int) ((mMaxHeight-view.getMeasuredHeight())/2.0f+0.5f);
+                int top = t + (int) ((mMaxHeight - view.getMeasuredHeight()) / 2.0f + 0.5f);
                 int right = l + view.getMeasuredWidth();
                 int bottom = top + view.getMeasuredHeight();
-                view.layout(l,top,right,bottom);
+                view.layout(l, top, right, bottom);
 
-                Log.i(TAG, l+" "+ top+" " +right+" "+ bottom);
-                l+=view.getMeasuredWidth()+mHorizontalSpacing;
+                Log.i(TAG, l + " " + top + " " + right + " " + bottom);
+                l += view.getMeasuredWidth() + mHorizontalSpacing;
             }
 
         }
