@@ -67,7 +67,11 @@ public class KingJaFlowLayout extends ViewGroup {
             if (mLine == null) {
                 mLine = new Line();
             }
-            mCurrentWidth += child.getMeasuredWidth();
+            int measuredWidth = child.getMeasuredWidth();
+            if (measuredWidth>childrenWidth){
+                child.measure(MeasureSpec.makeMeasureSpec(childrenWidth, MeasureSpec.EXACTLY),childHeightMeasureSpec);
+            }
+            mCurrentWidth += measuredWidth;
             //不超过一行
 
             if (mCurrentWidth <= childrenWidth) {
@@ -118,14 +122,14 @@ public class KingJaFlowLayout extends ViewGroup {
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
 //        if (changed) {
-//        Log.i(TAG, "mLines.size()"+mLines.size());
+        Log.i(TAG, "l"+l+"t"+t+"r"+r+"b"+b);
             for (int i = 0; i < mLines.size(); i++) {
                 if (i == 0) {
                     l = getPaddingLeft();
                     t = getPaddingTop();
                 }
                 Line line = mLines.get(i);
-                line.laytou(l, t, r, b);
+                line.laytou(l, t);
                 t += line.getLineHeight() + mVerticalSpacing;
             }
 //        }
@@ -163,7 +167,7 @@ public class KingJaFlowLayout extends ViewGroup {
             return mMaxHeight;
         }
 
-        public void laytou(int l, int t, int r, int b) {
+        public void laytou(int l, int t) {
             for (int i = 0; i < line.size(); i++) {
                 View view = line.get(i);
                 int top = t + (int) ((mMaxHeight - view.getMeasuredHeight()) / 2.0f + 0.5f);

@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-private final String[] mItmeArr={"情趣内衣","防狼器","太阳镜","帆船","熔断机制","二孩政策","二次元女朋友","旅游背包","数码相机","阿迪王","书籍","苍老师","床上用品","NBA壁纸","营养快线"};
+private final String[] mItmeArr={"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ","情趣内衣","防狼器","太阳镜","ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ","帆船","熔断机制","二孩政策","二次元女朋友","旅游背包","数码相机","阿迪王","书籍","苍老师","床上用品","NBA壁纸","营养快线"};
     private KingJaFlowLayout kj_fl;
 
     @Override

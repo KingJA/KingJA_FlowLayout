@@ -11,8 +11,8 @@
         android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        kingja:horizontalSpacing="20dp"
-        kingja:verticalSpacing="20dp"
+        kingja:horizontalSpacing="10dp"
+        kingja:verticalSpacing="10dp"
         />
 
 </RelativeLayout>
