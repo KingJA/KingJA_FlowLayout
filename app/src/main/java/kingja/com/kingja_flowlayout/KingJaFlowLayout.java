@@ -3,7 +3,6 @@ package kingja.com.kingja_flowlayout;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -15,12 +14,11 @@ import java.util.List;
  */
 public class KingJaFlowLayout extends ViewGroup {
 
-    private static final String TAG = "CustomFlowLayout";
     private int DEFAULT_SPACING = App.dip2px(10);
     private int mHorizontalSpacing = DEFAULT_SPACING;
     private int mVerticalSpacing = DEFAULT_SPACING;
     private Line mLine;
-    private List<Line> mLines = new ArrayList<Line>();
+    private List<Line> mLines = new ArrayList<>();
     private int mCurrentWidth;
     private LayoutParams childLayoutParams;
     private int childrenWidth;
@@ -58,7 +56,6 @@ public class KingJaFlowLayout extends ViewGroup {
         //布局区域
         childrenWidth = widthSize - getPaddingLeft() - getPaddingRight();
         int childrenHeight = heightSize - getPaddingTop() - getPaddingBottom();
-//        Log.i(TAG, "childrenWidth" + childrenWidth +"widthSize" + widthSize+"getPaddingLeft" + getPaddingLeft()+"getPaddingRight" + getPaddingRight());
         reset();
         for (int i = 0; i < getChildCount(); i++) {
             View child = getChildAt(i);
@@ -81,7 +78,6 @@ public class KingJaFlowLayout extends ViewGroup {
             //不超过一行
 
             if (mCurrentWidth <= childrenWidth) {
-//                Log.i(TAG, "if mCurrentWidth" + mCurrentWidth);
                 mLine.addView(child);
                 mCurrentWidth += mHorizontalSpacing;
                 //加上间距后超过一行
@@ -90,7 +86,6 @@ public class KingJaFlowLayout extends ViewGroup {
                 }
                 //超过一行
             } else {
-//                Log.i(TAG, "else mCurrentWidth" + mCurrentWidth);
                 if (mLine.size() == 0) {
                     mLine.addView(child);
                     newLine();
@@ -127,8 +122,6 @@ public class KingJaFlowLayout extends ViewGroup {
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-//        if (changed) {
-//        Log.i(TAG, "l"+l+"t"+t+"r"+r+"b"+b);
             for (int i = 0; i < mLines.size(); i++) {
                 if (i == 0) {
                     l = getPaddingLeft();
@@ -138,8 +131,6 @@ public class KingJaFlowLayout extends ViewGroup {
                 line.laytou(l, t);
                 t += line.getLineHeight() + mVerticalSpacing;
             }
-//        }
-
     }
 
     private void newLine() {
@@ -157,7 +148,7 @@ public class KingJaFlowLayout extends ViewGroup {
     }
 
     class Line {
-        private List<View> line = new ArrayList<View>();
+        private List<View> line = new ArrayList<>();
         private int mMaxHeight;
         private int mCurrentWidth;
 
@@ -181,9 +172,7 @@ public class KingJaFlowLayout extends ViewGroup {
         public void laytou(int l, int t) {
             if (ifAverage){
                 int totelLeftWidth=childrenWidth-mCurrentWidth;
-                Log.i(TAG, "totelLeftWidth" + totelLeftWidth);
                 int perLeftWidth= (int) (totelLeftWidth/(line.size()*1.0f)+0.5f);
-                Log.i(TAG, "perLeftWidth" + perLeftWidth);
                 for (int i = 0; i < line.size(); i++) {
                     View view = line.get(i);
                     int measureSpeWidth = MeasureSpec.makeMeasureSpec(view.getMeasuredWidth() + perLeftWidth, MeasureSpec.EXACTLY);
@@ -197,8 +186,6 @@ public class KingJaFlowLayout extends ViewGroup {
                 int right = l + view.getMeasuredWidth();
                 int bottom = top + view.getMeasuredHeight();
                 view.layout(l, top, right, bottom);
-
-//                Log.i(TAG, l + " " + top + " " + right + " " + bottom);
                 l += view.getMeasuredWidth() + mHorizontalSpacing;
             }
 
