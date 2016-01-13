@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Shinelon on 2016/1/13.
+ * Created by Shinelon on 2016/1/12.
  */
 public class KingJaFlowLayout extends ViewGroup {
 
