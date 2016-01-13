@@ -28,5 +28,4 @@ private final String[] mItmeArr={"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789ABCDEFGHIJ
             kj_fl_average.addView(itemTv);
         }
     }
-
 }
