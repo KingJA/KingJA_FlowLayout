@@ -1,18 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
 >
 
     <kingja.com.kingja_flowlayout.KingJaFlowLayout
         xmlns:kingja="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/kj_fl"
+        android:id="@+id/kj_fl_inAverage"
         android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         kingja:horizontalSpacing="10dp"
         kingja:verticalSpacing="10dp"
         />
+    <kingja.com.kingja_flowlayout.KingJaFlowLayout
+        xmlns:kingja="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/kj_fl_average"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        kingja:horizontalSpacing="10dp"
+        kingja:verticalSpacing="10dp"
+        kingja:average="true"
+        />
 
-</RelativeLayout>
+</LinearLayout>
