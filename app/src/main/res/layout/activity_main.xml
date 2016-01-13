@@ -15,6 +15,10 @@
         kingja:horizontalSpacing="10dp"
         kingja:verticalSpacing="10dp"
         />
+    <TextView
+        android:text="自动换行，填充宽度"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
     <kingja.com.kingja_flowlayout.KingJaFlowLayout
         xmlns:kingja="http://schemas.android.com/apk/res-auto"
         android:id="@+id/kj_fl_average"
